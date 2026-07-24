@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useFullscreen } from '../lib/useFullscreen'
 import { useTheme } from '../lib/useTheme'
 import { slideVariants } from '../lib/motionVariants'
+import { isVideoSrc } from '../lib/url'
 import { useT } from '../lib/translations'
 import { ExpandIcon, CompressIcon } from './icons'
 
@@ -75,19 +76,35 @@ export default function ProjectLightbox({ open, slides, title, current, directio
           >
             <div className="relative overflow-hidden rounded-xl flex justify-center">
               <AnimatePresence initial={false} custom={direction} mode="popLayout">
-                <motion.img
-                  key={current}
-                  src={slides[current].src}
-                  alt={`${title} — ${current + 1}`}
-                  custom={direction}
-                  variants={slideVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  className={`max-w-full object-contain ${isFullscreen ? 'max-h-[94dvh]' : 'max-h-[72dvh]'}`}
-                  draggable={false}
-                />
+                {isVideoSrc(slides[current].src) ? (
+                  <motion.video
+                    key={current}
+                    src={slides[current].src}
+                    controls
+                    playsInline
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    className={`max-w-full object-contain ${isFullscreen ? 'max-h-[94dvh]' : 'max-h-[72dvh]'}`}
+                  />
+                ) : (
+                  <motion.img
+                    key={current}
+                    src={slides[current].src}
+                    alt={`${title} — ${current + 1}`}
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    className={`max-w-full object-contain ${isFullscreen ? 'max-h-[94dvh]' : 'max-h-[72dvh]'}`}
+                    draggable={false}
+                  />
+                )}
               </AnimatePresence>
             </div>
 

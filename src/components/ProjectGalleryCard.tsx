@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTheme } from '../lib/useTheme'
 import { slideVariants } from '../lib/motionVariants'
+import { isVideoSrc } from '../lib/url'
 
 interface Slide { src: string; caption: string }
 
@@ -23,19 +24,36 @@ export default function ProjectGalleryCard({ slides, title, current, direction, 
     <div className="rounded-2xl border border-black/12 dark:border-white/8 overflow-hidden bg-white dark:bg-[#0d0d18] select-none">
       <div className="relative overflow-hidden cursor-zoom-in aspect-video" onClick={onOpen}>
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
-          <motion.img
-            key={current}
-            src={slides[current].src}
-            alt={`${title} — ${current + 1}`}
-            custom={direction}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0 w-full h-full object-contain"
-            draggable={false}
-          />
+          {isVideoSrc(slides[current].src) ? (
+            <motion.video
+              key={current}
+              src={slides[current].src}
+              controls
+              playsInline
+              onClick={e => e.stopPropagation()}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-0 w-full h-full object-contain"
+            />
+          ) : (
+            <motion.img
+              key={current}
+              src={slides[current].src}
+              alt={`${title} — ${current + 1}`}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-0 w-full h-full object-contain"
+              draggable={false}
+            />
+          )}
         </AnimatePresence>
         <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white/50">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 3 21 3 21 9" /><polyline points="9 21 3 21 3 15" /><line x1="21" y1="3" x2="14" y2="10" /><line x1="3" y1="21" x2="10" y2="14" /></svg>
