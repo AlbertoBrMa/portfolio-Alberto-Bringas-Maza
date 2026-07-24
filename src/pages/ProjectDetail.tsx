@@ -95,6 +95,7 @@ export default function ProjectDetail() {
           <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }} className="mb-20">
             {project.screenshots && project.screenshots.length > 0
               ? <ProjectCarousel
+                  key={project.slug}
                   slides={project.screenshots.map(shot => ({ src: shot.src, caption: loc(shot.caption, shot.caption_en, lang) }))}
                   title={loc(project.title, project.title_en, lang)}
                 />

@@ -58,6 +58,13 @@ body::-webkit-scrollbar {
   * { cursor: none !important; }
 }
 
+/* El cursor personalizado queda oculto tras el elemento en fullscreen nativo (top-layer),
+   así que dentro de :fullscreen se restaura el cursor nativo del sistema */
+:fullscreen,
+:fullscreen * {
+  cursor: auto !important;
+}
+
 #root {
   min-height: 100vh;
 }
