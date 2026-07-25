@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA: cualquier ruta que no sea un archivo real cae en index.html con 200
+# (sustituye al truco de public/404.html que necesitaba GitHub Pages).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
