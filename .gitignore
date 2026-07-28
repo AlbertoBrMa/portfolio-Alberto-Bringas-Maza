@@ -37,3 +37,7 @@ public/cv.pdf
 *.njsproj
 *.sln
 *.sw?
+
+# Config/notas locales de Claude Code, no forman parte del proyecto
+.claude/
+claude.md
