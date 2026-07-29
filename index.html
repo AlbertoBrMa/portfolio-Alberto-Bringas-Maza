@@ -19,6 +19,20 @@
         document.documentElement.lang = lang
       })()
     </script>
+    <script>
+      // Depuración temporal: visitando la web con ?debug=1 en la URL aparece
+      // un botón flotante que abre una consola completa (errores, red, etc.)
+      // directamente en el móvil, sin Mac ni herramientas externas. Quitar
+      // este bloque cuando ya no haga falta.
+      if (/[?&]debug=1(&|$)/.test(location.search)) {
+        var erudaScript = document.createElement('script')
+        erudaScript.src = 'https://cdn.jsdelivr.net/npm/eruda'
+        erudaScript.onload = function () {
+          if (window.eruda) window.eruda.init()
+        }
+        document.head.appendChild(erudaScript)
+      }
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alberto Bringas Maza — Desarrollador de Software</title>
