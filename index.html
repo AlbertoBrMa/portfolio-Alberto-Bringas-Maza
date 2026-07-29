@@ -47,6 +47,45 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Diagnóstico temporal: si algo falla antes de que React llegue a
+      // montar (incompatibilidad de JS en un navegador concreto, script
+      // bloqueado, etc.), en vez de dejar la pantalla en blanco se muestra
+      // el error para poder hacer una foto y reportarlo. Escrito en JS
+      // plano (sin sintaxis moderna) para que funcione igual en el
+      // navegador que esté fallando.
+      (function () {
+        var lastError = null
+
+        function showFallback(message) {
+          var root = document.getElementById('root')
+          if (!root || root.getAttribute('data-app-mounted') === '1') return
+          root.innerHTML =
+            '<div style="font-family: monospace; font-size: 13px; color: #f3f4f6; ' +
+            'background: #0a0a0f; min-height: 100vh; padding: 24px; white-space: pre-wrap;">' +
+            'Ha ocurrido un error al cargar la página.\n' +
+            'Por favor, haz una foto a este mensaje y compártelo:\n\n' +
+            message +
+            '</div>'
+        }
+
+        window.addEventListener('error', function (e) {
+          lastError = (e && e.message) || 'Error desconocido'
+          if (e && e.filename) lastError += '\n' + e.filename + ':' + e.lineno
+        })
+        window.addEventListener('unhandledrejection', function (e) {
+          lastError = 'Promise rechazada: ' + ((e && e.reason && e.reason.message) || e.reason)
+        })
+
+        setTimeout(function () {
+          var root = document.getElementById('root')
+          var mounted = root && root.getAttribute('data-app-mounted') === '1'
+          if (!mounted) {
+            showFallback(lastError || ('La app no llegó a arrancar (sin error capturado).\n' + navigator.userAgent))
+          }
+        }, 4000)
+      })()
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
