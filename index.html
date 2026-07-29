@@ -31,7 +31,19 @@
     <meta name="twitter:description" content="Portfolio de Alberto Bringas Maza, desarrollador de software especializado en React, Python, IA y datos." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Carga no bloqueante: si fonts.googleapis.com tarda o no responde (redes
+         restringidas, navegadores in-app), la página pinta igual con la fuente
+         de sistema y cambia a la de Google en cuanto llegue, en vez de quedarse
+         esperando indefinidamente antes del primer pintado. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" />
+    </noscript>
   </head>
   <body>
     <div id="root"></div>
