@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useFullscreen } from '../lib/useFullscreen'
+import { useFullscreen, exitFullscreen } from '../lib/useFullscreen'
 import { useTheme } from '../lib/useTheme'
 import { slideVariants } from '../lib/motionVariants'
 import { isVideoSrc } from '../lib/url'
@@ -31,7 +31,7 @@ export default function ProjectLightbox({ open, slides, title, current, directio
 
   useEffect(() => {
     if (open || document.fullscreenElement !== ref.current) return
-    document.exitFullscreen().catch(() => {})
+    exitFullscreen()
   }, [open])
 
   useEffect(() => {

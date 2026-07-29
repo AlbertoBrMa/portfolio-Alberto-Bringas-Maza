@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useFullscreen } from '../lib/useFullscreen'
+import { useFullscreen, exitFullscreen } from '../lib/useFullscreen'
 import { useT } from '../lib/translations'
 import { ExpandIcon, CompressIcon } from './icons'
 
@@ -20,7 +20,7 @@ export default function CvModal({ open, onClose, cvUrl, downloadName, title }: P
 
   useEffect(() => {
     if (open || document.fullscreenElement !== ref.current) return
-    document.exitFullscreen().catch(() => {})
+    exitFullscreen()
   }, [open])
 
   useEffect(() => {
